@@ -28,10 +28,8 @@ class TD::UpdateManager
     update = TD::Api.client_receive(@td_client, TIMEOUT)
 
     unless update.nil?
-      extra  = update.delete('@extra')
-      update = TD::Types.wrap(update)
+      extra = update.delete(:extra)
       callback&.call(update)
-
       match_handlers!(update, extra).each { |h| h.async.run(update) }
     end
   end

@@ -17,8 +17,19 @@ module TD::Api
   end
 
   def client_receive(client, timeout)
-    update = Dl.td_json_client_receive(client, timeout)
-    JSON.parse(update) if update
+    update = {}
+    update[:raw] = Dl.td_json_client_receive(client, timeout)
+    update[:extra] = update[:raw].length > 38 ? update[:raw].slice(-38,36) : nil
+    # update[:type] = update[:raw].match(/\@type\":\"([a-zA-Z]+)\"/)&.[](1)
+    # find type (Without regex! Memory efficient!)
+    type = ''
+    for i in (10..update[:raw].length) do
+      break if update[:raw][i] == "\"".freeze
+      type << update[:raw][i]
+    end
+    update[:type] = type
+    update[:type] = TD::Types.const_get(TD::Types::LOOKUP_TABLE[update[:type]]) if update[:type]
+    update
   end
 
   def client_destroy(client)

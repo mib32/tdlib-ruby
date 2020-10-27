@@ -4,6 +4,7 @@ require 'securerandom'
 class TD::Client
   include Concurrent
   include TD::ClientMethods
+  attr_accessor :td_client
 
   TIMEOUT = 20
 
@@ -70,7 +71,7 @@ class TD::Client
       result = nil
       mutex = Mutex.new
 
-      @update_manager << TD::UpdateHandler.new(TD::Types::Base, extra, disposable: true) do |update|
+      @update_manager << TD::UpdateHandler.new(TD::Types::Base, extra, parse_json: false, disposable: true) do |update|
         mutex.synchronize do
           result = update
           condition.signal
@@ -86,7 +87,7 @@ class TD::Client
         error = result if result.is_a?(TD::Types::Error)
         error = timeout_error if result.nil?
         raise TD::Error.new(error) if error
-        result
+        result[:raw]
       end
     end
   end
@@ -111,7 +112,7 @@ class TD::Client
   # Binds passed block as a handler for updates with type of *update_type*
   # @param [String, Class] update_type
   # @yield [update] yields update to the block as soon as it's received
-  def on(update_type, &action)
+  def on(update_type, parse_json: true, &action)
     if update_type.is_a?(String)
       if (type_const = TD::Types::LOOKUP_TABLE[update_type])
         update_type = TD::Types.const_get("TD::Types::#{type_const}")
@@ -124,7 +125,7 @@ class TD::Client
       raise ArgumentError.new("Wrong type specified (#{update_type}). Should be of kind TD::Types::Base")
     end
 
-    @update_manager << TD::UpdateHandler.new(update_type, &action)
+    @update_manager << TD::UpdateHandler.new(update_type, parse_json: parse_json, &action)
   end
 
   # returns future that will be fulfilled when client is ready
@@ -167,7 +168,7 @@ class TD::Client
   private
 
   def handle_update(update)
-    return unless update.is_a?(TD::Types::AuthorizationState::Closed)
+    return unless update[:type] <= TD::Types::AuthorizationState::Closed
     @alive = false
     @ready = false
     TD::Api.client_destroy(@td_client)

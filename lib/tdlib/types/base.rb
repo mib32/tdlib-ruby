@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module TD::Types
   class Base < Dry::Struct
     # throw an error when unknown keys provided

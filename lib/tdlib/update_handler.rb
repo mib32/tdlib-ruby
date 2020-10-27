@@ -3,21 +3,27 @@ class TD::UpdateHandler
 
   attr_reader :update_type, :extra
 
-  def initialize(update_type, extra = nil, disposable: false, &action)
+  def initialize(update_type, extra = nil, parse_json: true, disposable: false, &action)
     super()
 
     @action = action
     @update_type = update_type
     @extra = extra
     @disposable = disposable
+    @parse_json = parse_json
   end
 
   def run(update)
-    action.call(update)
+    if @parse_json
+      action.call(TD::Types.wrap(JSON.parse(update[:raw])) )
+    else
+      action.call(update)
+    end
   end
 
   def match?(update, extra = nil)
-    update.is_a?(update_type) && (self.extra.nil? || self.extra == extra)
+    # byebug if update_type == TD::Types::Update::AuthorizationState
+    update[:type] <= update_type && (self.extra.nil? || self.extra == extra)
   end
 
   def disposable?
