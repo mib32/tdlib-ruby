@@ -18,8 +18,10 @@ module TD::Api
 
   def client_receive(client, timeout)
     update = {}
-    update[:raw] = Dl.td_json_client_receive(client, timeout)
-    return nil if !update[:raw]
+    update[:pointer] = Dl.td_json_client_receive(client, timeout)
+    return nil if update[:pointer].null?
+    update[:raw] = update[:pointer].read_string
+    update[:pointer].free
     update[:extra] = update[:raw].length > 38 ? update[:raw].slice(-38,36) : nil
     # update[:type] = update[:raw].match(/\@type\":\"([a-zA-Z]+)\"/)&.[](1)
     # find type (Without regex! Memory efficient!)
