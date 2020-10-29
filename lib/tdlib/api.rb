@@ -61,7 +61,7 @@ module TD::Api
         find_lib
 
         attach_function :td_json_client_create, [], :pointer
-        attach_function :td_json_client_receive, [:pointer, :double], :string, blocking: true
+        attach_function :td_json_client_receive, [:pointer, :double], :pointer, blocking: true
         attach_function :td_json_client_send, [:pointer, :string], :pointer, blocking: true
         attach_function :td_json_client_execute, [:pointer, :string], :string, blocking: true
         attach_function :td_json_client_destroy, [:pointer], :void
