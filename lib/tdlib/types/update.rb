@@ -2,6 +2,7 @@ module TD::Types
   # Contains notifications about data changes.
   class Update < Base
     %w[
+      animation_search_parameters
       authorization_state
       new_message
       message_send_acknowledged
