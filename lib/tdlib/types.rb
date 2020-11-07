@@ -752,6 +752,7 @@ module TD::Types
       'proxies'                                         => 'Proxies',
       'inputSticker'                                    => 'InputSticker',
       'Update'                                          => 'Update',
+      'updateAnimationSearchParameters'                 => 'Update::AnimationSearchParameters',
       'updateAuthorizationState'                        => 'Update::AuthorizationState',
       'updateNewMessage'                                => 'Update::NewMessage',
       'updateMessageSendAcknowledged'                   => 'Update::MessageSendAcknowledged',
