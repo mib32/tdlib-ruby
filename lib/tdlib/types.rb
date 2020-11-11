@@ -754,6 +754,7 @@ module TD::Types
       'Update'                                          => 'Update',
       'updateAnimationSearchParameters'                 => 'Update::AnimationSearchParameters',
       'updateAuthorizationState'                        => 'Update::AuthorizationState',
+      'updateDiceEmojis'                                => 'Update::DiceEmojis',
       'updateNewMessage'                                => 'Update::NewMessage',
       'updateMessageSendAcknowledged'                   => 'Update::MessageSendAcknowledged',
       'updateMessageSendSucceeded'                      => 'Update::MessageSendSucceeded',

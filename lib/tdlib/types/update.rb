@@ -4,6 +4,7 @@ module TD::Types
     %w[
       animation_search_parameters
       authorization_state
+      dice_emojis
       new_message
       message_send_acknowledged
       message_send_succeeded
