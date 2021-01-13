@@ -16,6 +16,7 @@ module TD::Types
       message_mention_read
       message_live_location_viewed
       new_chat
+      chat_filters
       chat_chat_list
       chat_title
       chat_photo

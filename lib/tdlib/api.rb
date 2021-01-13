@@ -31,6 +31,7 @@ module TD::Api
       type << update[:raw][i]
     end
     update[:type] = type
+    puts type
     update[:type] = TD::Types.const_get(TD::Types::LOOKUP_TABLE[update[:type]]) if update[:type]
     update
   end

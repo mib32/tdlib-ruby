@@ -783,6 +783,7 @@ module TD::Types
       'updateChatNotificationSettings'                  => 'Update::ChatNotificationSettings',
       'updateScopeNotificationSettings'                 => 'Update::ScopeNotificationSettings',
       'updateChatActionBar'                             => 'Update::ChatActionBar',
+      'updateChatFilters'                               => 'Update::ChatFilters',
       'updateChatPinnedMessage'                         => 'Update::ChatPinnedMessage',
       'updateChatReplyMarkup'                           => 'Update::ChatReplyMarkup',
       'updateChatDraftMessage'                          => 'Update::ChatDraftMessage',
@@ -835,7 +836,8 @@ module TD::Types
       'logStreamFile'                                   => 'LogStream::File',
       'logStreamEmpty'                                  => 'LogStream::Empty',
       'logVerbosityLevel'                               => 'LogVerbosityLevel',
-      'logTags'                                         => 'LogTags'
+      'logTags'                                         => 'LogTags',
+      'chatFilterInfo'                                  => 'ChatFilterInfo',
   }.freeze
 
   module_function
@@ -912,6 +914,7 @@ module TD::Types
     chat_event_action
     chat_event_log_filters
     chat_events
+    chat_filter_info
     chat_invite_link
     chat_invite_link_info
     chat_list
