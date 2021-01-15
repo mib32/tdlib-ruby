@@ -32,7 +32,14 @@ module TD::Api
     end
     update[:type] = type
     puts type
-    update[:type] = TD::Types.const_get(TD::Types::LOOKUP_TABLE[update[:type]]) if update[:type]
+    if update[:type]
+      update_klass = TD::Types::LOOKUP_TABLE[update[:type]]
+      if !update_klass.nil?
+        update[:type] = TD::Types.const_get(update_klass) 
+      else
+        puts "ERROR! #{update[:type]} class missing"
+      end
+    end
     update
   end
 

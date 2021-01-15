@@ -23,7 +23,7 @@ class TD::UpdateHandler
 
   def match?(update, extra = nil)
     # byebug if update_type == TD::Types::Update::AuthorizationState
-    update[:type] <= update_type && (self.extra.nil? || self.extra == extra)
+    (update[:type].is_a?(Class) ? update[:type] <= update_type : update[:type] == update_type ) && (self.extra.nil? || self.extra == extra)
   end
 
   def disposable?
