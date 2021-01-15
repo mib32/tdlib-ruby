@@ -31,7 +31,6 @@ module TD::Api
       type << update[:raw][i]
     end
     update[:type] = type
-    puts type
     if update[:type]
       update_klass = TD::Types::LOOKUP_TABLE[update[:type]]
       if !update_klass.nil?
